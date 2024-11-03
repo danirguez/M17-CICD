@@ -1,0 +1,2 @@
+# Simulador de lanzamiento de dados
+Aplicación que simula el lanzamiento de dados usando Python y la librería `dice`. Utilizaremos Docker para contenizar la aplicación. Se creará aparte de la rama main, una rama feature/rol. Además, implementará un pipeline de integración y despliegue continuo con Jenkins.
