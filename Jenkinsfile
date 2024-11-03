@@ -25,10 +25,8 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh 'python3 -m venv .venv'
-                sh '. .venv/bin/activate'
-                sh 'pip install -r requirements.txt'
                 script {
+                    sh 'pip install -r requirements.txt'
                     dockerImage = docker.build registry
                 }
             }
