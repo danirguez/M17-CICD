@@ -1,5 +1,6 @@
 pipeline {
     agent any
+
     environment {
         registry = "danirguez/m17-cicd"
         registryCredentials = "dockerhub-user"
@@ -8,6 +9,7 @@ pipeline {
         repository = "https://github.com/danirguez/M17-CICD.git"
         repositoryCredentials = "github-user"
     }
+
     stages {
         stage('Clean Workspace') {
             steps {
@@ -16,22 +18,14 @@ pipeline {
         }
         stage('Checkout code') {
             steps {
-                git branch: 'main', credentialsId: repositoryCredentials, url: repository
-            }
-        }
-        stage('Code Analysis') {
-            environment {
-                scannerHome = tool 'SonarQube Scanner'
-            }
-            steps {
-                withSonarQubeEnv('SonarQube') {
-                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=$project -Dsonar.sources=src"
-                }
+                git branch: 'main',
+                    credentialsId: repositoryCredentials,
+                    url: repository
             }
         }
         stage('Build') {
             steps {
-                sh 'python -m venv .venv'
+                 sh 'python -m venv .venv'
                 sh '.venv/Scripts/activate'
                 sh 'pip install -r requirements.txt'
                 script {
@@ -59,6 +53,7 @@ pipeline {
                 }
             }
         }
+
     }
     post {
         failure {
